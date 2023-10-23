@@ -4,14 +4,12 @@ package.path = package.path .. ";../../modules/modules.lua"
 local aoc = require("modules")
 
 local test = aoc.fileRead('../input.txt')
--- local test = fileRead('../test.txt')
-
-local lineCount = aoc.lines(test)
+-- local test = aoc.fileRead('../test.txt')
 
 local measurement = aoc.extractMesurmentsInTable(test)
 
 local function findHowManyEncreases(measur, line)
-    local count = 1
+    local count = 0
     for i = 2, line do
         if measur[i] > measur[i-1] then
             count = count + 1
@@ -20,7 +18,7 @@ local function findHowManyEncreases(measur, line)
     return count
 end
 
-local result = findHowManyEncreases(measurement, lineCount)
+local result = findHowManyEncreases(measurement, #measurement)
 print("Part one result: " .. result)
 
 -- Part Two

@@ -6,7 +6,7 @@ package.path = package.path .. ";../../modules/modules.lua"
 local aoc = require("modules")
 
 local test = aoc.fileRead('../input.txt')
--- local test = fileRead('../test.txt')
+-- local test = aoc.fileRead('../test.txt')
 
 local lineCount = aoc.lines(test)
 

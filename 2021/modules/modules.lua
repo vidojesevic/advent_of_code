@@ -26,4 +26,12 @@ function aoc.extractMesurmentsInTable(file)
     return measurement
 end
 
+function aoc.convertTableOfNumberToString(tableNumber)
+    local tableString = {}
+    for i = 1, #tableNumber do
+        table.insert(tableString, tostring(tableNumber[i]))
+    end
+    return tableString
+end
+
 return aoc

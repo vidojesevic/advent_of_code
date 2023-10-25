@@ -23,10 +23,10 @@ print("Part one result: " .. result)
 
 -- Part Two
 
-local function measurementTwo(measurement)
+local function measurementTwo(tableMeasure)
     local measure = {}
     for i = 3, #measurement do
-        local temp = measurement[i] + measurement[i-1] + measurement[i-2]
+        local temp = tableMeasure[i] + tableMeasure[i-1] + tableMeasure[i-2]
         table.insert(measure, temp)
     end
     return measure

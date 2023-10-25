@@ -1,6 +1,6 @@
 -- Day 4: Giant Squid --
 
-print("Bingo")
+print("\\\\ Giant Squid Bingo //")
 package.path = package.path .. ";../../modules/modules.lua"
 local aoc = require("modules")
 
@@ -111,7 +111,6 @@ local function winByColumn(mat)
                 count = count + 1
             end
             if count == 5 then
-                print("Win by column")
                 return 1
             end
         end
@@ -132,9 +131,20 @@ local function winByRow(mat)
     return sum
 end
 
+local function checkIfPlayerAlreadyWon(winers, number)
+    for i = 1, #winers do
+        if winers[i] == number then
+            return 1
+        end
+    end
+    return 0
+end
+
 -- Game
 local function playBingo(random, matrica)
     local game = 0
+    local winner = {}
+    local winnerBoard = {}
     for i = 1, #random do
         for j = 1, #matrica do
             for m = 1, #matrica[j] do
@@ -143,38 +153,51 @@ local function playBingo(random, matrica)
 
                     if random[i] == row[k] then
                         row[k] = 0
-                        -- table.remove(matrica[j][m], k)
                     end
                 end
                 local column = winByColumn(matrica[j])
                 if column == 1 then
                     game = random[i]
-                    print("Ladies and gentleman, we have a winner")
-                    return game, matrica[j]
+                    local check = checkIfPlayerAlreadyWon(winner, j)
+                    if check == 0 then
+                        table.insert(winner, j)
+                        winnerBoard = matrica[j]
+                    end
+                    -- First winner
+                    -- print("Ladies and gentleman, we have a winner")
+                    -- return game, matrica[j]
                 end
 
                 -- win by row --
                 local rowWin = winByRow(matrica[j])
                 if rowWin == 0 then
                     game = random[i]
-                    print("Ladies and gentleman, we have a winner")
-                    return game, matrica[j]
+                    local check = checkIfPlayerAlreadyWon(winner, j)
+                    if check == 0 then
+                        table.insert(winner, j)
+                        winnerBoard = matrica[j]
+                    end
+                    -- First winner
+                    -- print("Ladies and gentleman, we have a winner")
+                    -- return game, matrica[j]
                 end
-                -- if #matrica[j][m] == 0 then
-                --     game = random[i]
-                --     print("Win by row!")
-                --     print("Ladies and gentleman, we have a winner\nWinner is number " .. j)
-                --     return game, matrica[j]
-                -- end
+                if #winner == #matrica then
+                    return winner[#winner], game, winnerBoard
+                end
             end
         end
     end
-    return game
 end
 
-local game, winRow = playBingo(num, matrix)
+-- First winner -- Part one
+
+-- local game, winRow = playBingo(num, matrix)
+
+-- Last winner - Part two
+
+local player, game, winnerBoard = playBingo(num, matrix)
 if game ~= 0 then
-    print("Winning number is " .. game)
+    print("Winning number is " .. game .. ", and last winner is " .. player)
 else
     print("No winner found yet!")
 end
@@ -186,9 +209,11 @@ local function calculateResult(winrow, winnum)
             sum = sum + winrow[i][j]
         end
     end
-    print(sum .. " * " .. winnum .. " = " .. sum*winnum)
     return sum * winnum
 end
 
-local result = calculateResult(winRow, game)
+-- First
+-- local result = calculateResult(winRow, game)
+local result = calculateResult(winnerBoard, game)
 print(result)
+

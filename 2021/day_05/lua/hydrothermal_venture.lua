@@ -69,3 +69,24 @@ end
 local vertical = findHorizontalOrVerticalVent(x1, x2)
 local horizontal = findHorizontalOrVerticalVent(y1, y2)
 
+local vent = aoc.mergeTwoArrays(horizontal, vertical)
+print(table.concat(vent, ", "))
+
+-- arr (horizontal) 
+local function fillDiagram(arr, coorX1, coorX2, coorY1, coorY2)
+    local fill = {}
+    for i = 1, #arr do
+        -- print("Index " .. arr[i])
+        -- print("x1: " .. coorX1[arr[i]])
+        -- print("y1: " .. coorY1[arr[i]])
+        -- print("x2: " .. coorX2[arr[i]])
+        -- print("x2: " .. coorY2[arr[i]])
+        if coorX1 == coorY1 then
+            table.insert(fill)
+        elseif coorX2 == coorY2 then
+        end
+    end
+    return fill
+end
+
+local diagram = fillDiagram(vent, x1, x2, y1, y2)

@@ -42,4 +42,22 @@ function aoc.explode(div, str) -- like php
     return arr
 end
 
+-- just in case if I need it
+function aoc.mergeTwoArrays(arr1, arr2)
+    local arr = {}
+    local index1, index2 = 1, 1
+    while index1 <= #arr1 and index2 <= #arr2 do
+        if arr1[index1] < arr2[index2] then
+            table.insert(arr, arr1[index1])
+            index1 = index1 + 1
+        else
+            table.insert(arr, arr2[index2])
+            index2 = index2 + 1
+        end
+    end
+    table.move(arr1, index1, #arr1, #arr + 1, arr)
+    table.move(arr2, index2, #arr2, #arr + 1, arr)
+    return arr
+end
+
 return aoc

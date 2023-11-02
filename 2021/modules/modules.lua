@@ -19,11 +19,11 @@ function aoc.lines(file)
 end
 
 function aoc.extractMesurmentsInTable(file)
-    local measurement = {}
+    local arr = {}
     for line in file:gmatch("([^\n]+)") do
-        table.insert(measurement, line)
+        table.insert(arr, line)
     end
-    return measurement
+    return arr
 end
 
 function aoc.convertTableOfNumberToString(tableNumber)
@@ -32,6 +32,14 @@ function aoc.convertTableOfNumberToString(tableNumber)
         table.insert(tableString, tostring(tableNumber[i]))
     end
     return tableString
+end
+
+function aoc.explode(div, str) -- like php
+    if div == '' then return false end
+    local arr = {}
+    local pattern = string.format("([^%s]+)", div)
+    str:gsub(pattern, function(c) arr[#arr + 1] = c end)
+    return arr
 end
 
 return aoc

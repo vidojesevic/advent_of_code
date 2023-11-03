@@ -5,6 +5,8 @@ package.path = package.path .. ";../../modules/modules.lua"
 local aoc = require("modules")
 
 local test = aoc.fileRead("../test.txt")
+-- local test = aoc.fileRead("../input.txt")
+print(test)
 
 -- extract coordinates
 local function extractCoordinates(str)
@@ -19,6 +21,7 @@ local function extractCoordinates(str)
     return coordinates
 end
 local coordinate = extractCoordinates(test)
+-- print(table.concat(coordinate, "\n"))
 
 -- extract X and y
 local function extractXorY(arr, negative)
@@ -69,24 +72,70 @@ end
 local vertical = findHorizontalOrVerticalVent(x1, x2)
 local horizontal = findHorizontalOrVerticalVent(y1, y2)
 
-local vent = aoc.mergeTwoArrays(horizontal, vertical)
-print(table.concat(vent, ", "))
-
--- arr (horizontal) 
-local function fillDiagram(arr, coorX1, coorX2, coorY1, coorY2)
+local function fillDiagramVert(arr, coorX1, coorY1, coorY2)
     local fill = {}
     for i = 1, #arr do
-        -- print("Index " .. arr[i])
-        -- print("x1: " .. coorX1[arr[i]])
-        -- print("y1: " .. coorY1[arr[i]])
-        -- print("x2: " .. coorX2[arr[i]])
-        -- print("x2: " .. coorY2[arr[i]])
-        if coorX1 == coorY1 then
-            table.insert(fill)
-        elseif coorX2 == coorY2 then
+        table.insert(fill, coorX1[arr[i]] .. "," .. coorY1[arr[i]])
+        local max = math.max(coorY1[arr[i]], coorY2[arr[i]])
+        if max == coorY1[arr[i]] then
+            local div = coorY1[arr[i]] - coorY2[arr[i]]
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] .. "," .. coorY1[arr[i]] - j)
+            end
+        elseif max == coorY2[arr[i]] then
+            local div = coorY2[arr[i]] - coorY1[arr[i]]
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] .. "," .. coorY1[arr[i]] + j)
+            end
         end
     end
     return fill
 end
 
-local diagram = fillDiagram(vent, x1, x2, y1, y2)
+-- there is more elegant solution, but I don't care right now xD
+local function fillDiagramHor(arr, coorY, coorX1, coorX2)
+    local fill = {}
+    for i = 1, #arr do
+        table.insert(fill, coorX1[arr[i]] .. "," .. coorY[arr[i]])
+        local max = math.max(coorX1[arr[i]], coorX2[arr[i]])
+        if max == coorX1[arr[i]] then
+            local div = coorX1[arr[i]] - coorX2[arr[i]]
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] - j .. "," .. coorY[arr[i]])
+            end
+        elseif max == coorX2[arr[i]] then
+            local div = coorX2[arr[i]] - coorX1[arr[i]]
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] + j .. "," .. coorY[arr[i]])
+            end
+        end
+    end
+    return fill
+end
+
+local diagramVert = fillDiagramVert(vertical, x1, y1, y2)
+local diagramHor = fillDiagramHor(horizontal, y1, x1, x2)
+
+local finalArray = aoc.mergeTwoArrays(diagramVert, diagramHor)
+
+local function findCross(arr)
+    local count = {}
+    local result = 0
+    for _, str in ipairs(arr) do
+        if not count[str] then
+            count[str] = 1
+        else
+            count[str] = count[str] + 1
+            if count[str] == 2 then
+                result = result + 1
+            end
+        end
+    end
+    return result
+end
+
+local result = findCross(finalArray)
+print("Part One\nResult: " .. result)
+
+-- Part two
+-- local function findDiagonalVent45

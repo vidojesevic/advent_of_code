@@ -4,9 +4,9 @@
 package.path = package.path .. ";../../modules/modules.lua"
 local aoc = require("modules")
 
-local test = aoc.fileRead("../test.txt")
--- local test = aoc.fileRead("../input.txt")
-print(test)
+-- local test = aoc.fileRead("../test.txt")
+local test = aoc.fileRead("../input.txt")
+-- print(test)
 
 -- extract coordinates
 local function extractCoordinates(str)
@@ -134,8 +134,86 @@ local function findCross(arr)
     return result
 end
 
-local result = findCross(finalArray)
-print("Part One\nResult: " .. result)
+local resultPartOne = findCross(finalArray)
+print("Part One\nResult: " .. resultPartOne)
 
 -- Part two
--- local function findDiagonalVent45
+local function findDiagonalVent315(x1, x2, y1, y2)
+    local result = {}
+    for i = 1, #x1 do
+        -- first case
+        if (x1[i] - y1[i]) == (x2[i] - y2[i]) then
+            -- print(x1[i] .. "," .. y1[i] .. "->" .. x2[i] .. "," .. y2[i])
+            table.insert(result, i)
+        end
+    end
+    return result
+end
+
+local function findDiagonalVent45(x1, x2, y1, y2)
+    local result = {}
+    for i = 1, #x1 do
+        -- first case
+        if (x1[i] - y2[i]) == (x2[i] - y1[i]) then
+            -- print(x1[i] .. "," .. y1[i] .. "->" .. x2[i] .. "," .. y2[i])
+            table.insert(result, i)
+        end
+    end
+    return result
+end
+
+local vent315 = findDiagonalVent315(x1, x2, y1, y2)
+-- print("Indexes of 315 vent: " .. table.concat(vent315, ", "))
+
+local vent45 = findDiagonalVent45(x1, x2, y1, y2)
+-- print("Indexes of 315 vent: " .. table.concat(vent45, ", "))
+
+local function fillDiagramDiagonal315(arr, coorX1, coorX2, coorY1)
+    local fill = {}
+    for i = 1, #arr do
+        table.insert(fill, coorX1[arr[i]] .. "," .. coorY1[arr[i]])
+        -- print(coorX1[arr[i]] .. "," .. coorY1[arr[i]])
+        local div = coorX1[arr[i]] - coorX2[arr[i]]
+        if div > 0 then
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] - j .. "," .. coorY1[arr[i]] - j)
+            end
+        else
+            div = math.abs(div)
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] + j .. "," .. coorY1[arr[i]] + j)
+            end
+        end
+    end
+    return fill
+end
+
+local function fillDiagramDiagonal45(arr, coorX1, coorX2, coorY1)
+    local fill = {}
+    for i = 1, #arr do
+        table.insert(fill, coorX1[arr[i]] .. "," .. coorY1[arr[i]])
+        -- print(coorX1[arr[i]] .. "," .. coorY1[arr[i]])
+        local div = coorX1[arr[i]] - coorX2[arr[i]]
+        if div > 0 then
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] - j .. "," .. coorY1[arr[i]] + j)
+            end
+        else
+            div = math.abs(div)
+            for j = 1, div do
+                table.insert(fill, coorX1[arr[i]] + j .. "," .. coorY1[arr[i]] - j)
+            end
+        end
+    end
+    return fill
+end
+
+local diagramDiagonal315 = fillDiagramDiagonal315(vent315, x1, x2, y1)
+-- print("Vent 315 coordinates:\n" .. table.concat(diagramDiagonal315, "\n"))
+local diagramDiagonal45 = fillDiagramDiagonal45(vent45, x1, x2, y1)
+-- print("Vent 45 coordinates:\n" .. table.concat(diagramDiagonal45, "\n"))
+local diagonalAllCoordinates = aoc.mergeTwoArrays(diagramDiagonal45, diagramDiagonal315)
+local finalPartTwo = aoc.mergeTwoArrays(diagonalAllCoordinates, finalArray)
+-- print(table.concat(finalPartTwo, "\n"))
+local resultPartTwo = findCross(finalPartTwo)
+print("Part two: " .. resultPartTwo)

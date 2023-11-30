@@ -1,6 +1,6 @@
 <?php
 
-require "../../modules/modules.php";
+require "../../../modules/modules.php";
 
 // $test = fileRead('../test.txt');
 $test = fileRead('../input.txt');

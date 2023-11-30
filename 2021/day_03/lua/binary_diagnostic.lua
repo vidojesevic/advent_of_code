@@ -1,6 +1,6 @@
 -- Day 3: Binary Diagnostic --
 
-package.path = package.path .. ";../../modules/modules.lua"
+package.path = package.path .. ";../../../modules/modules.lua"
 local aoc = require("modules")
 
 local file = aoc.fileRead('../input.txt')

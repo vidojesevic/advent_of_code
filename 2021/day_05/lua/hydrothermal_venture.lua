@@ -1,7 +1,7 @@
 -- = = = = = = = = = = = = --
 --   Hydrothermal Venture  --
 -- = = = = = = = = = = = = --
-package.path = package.path .. ";../../modules/modules.lua"
+package.path = package.path .. ";../../../modules/modules.lua"
 local aoc = require("modules")
 
 -- local test = aoc.fileRead("../test.txt")

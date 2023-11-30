@@ -2,7 +2,7 @@
 -- forward X - increases horizontal by X units
 -- down X - increases the depth by X units
 -- up X - decreases the depth by X units
-package.path = package.path .. ";../../modules/modules.lua"
+package.path = package.path .. ";../../../modules/modules.lua"
 local aoc = require("modules")
 
 local test = aoc.fileRead('../input.txt')

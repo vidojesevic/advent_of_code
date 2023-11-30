@@ -1,7 +1,7 @@
 -- Day 4: Giant Squid --
 
 print("\\\\ Giant Squid Bingo //")
-package.path = package.path .. ";../../modules/modules.lua"
+package.path = package.path .. ";../../../modules/modules.lua"
 local aoc = require("modules")
 
 local bingo = aoc.fileRead('../input.txt')

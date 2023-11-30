@@ -1,6 +1,6 @@
 -- How many measurements are larger than the previous measurement?
 
-package.path = package.path .. ";../../modules/modules.lua"
+package.path = package.path .. ";../../../modules/modules.lua"
 local aoc = require("modules")
 
 local test = aoc.fileRead('../input.txt')

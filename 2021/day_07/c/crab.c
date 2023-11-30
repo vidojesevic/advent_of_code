@@ -5,13 +5,13 @@
 
 int main(void) {
     printf("Advent of Code 2021 || Day 07\n");
-    // int size = 1000;
-    int size = 10;
+    int size = 1000;
+    // int size = 10;
 
-    int *num = readFile("../test.txt");
-    // int *num = readFile("../input.txt");
+    // int *num = readFile("../test.txt");
+    int *num = readFile("../input.txt");
 
-    printf("Size of array: %d\nValues:\n", size);
+    printf("Size of array: %d\n", size);
 
     // for (int i = 0; i < size; ++i) {
     //     printf("%d: %d\n", i, num[i]);
@@ -21,6 +21,9 @@ int main(void) {
 
     int result = calculateFuel(num, size, min, max);
     printf("Result part one: %d\n", result);
+
+    int resultTwo = calculateFuelExp(num, size, min, max);
+    printf("Result part two: %d\n", resultTwo);
 
     free(num);
 
@@ -80,7 +83,55 @@ int findMax(int* arr, int size) {
 }
 
 int calculateFuel(int* num, int size, int min, int max) {
-    int count;
+    int count = 0;
+
+    for (int i = min; i <= max; ++i) {
+        int temp = 0;
+        for (int j = 0; j < size; ++j) {
+            if (min > num[j]) {
+                temp += min - num[j];
+            }
+            if (min < num[j]) {
+                temp += num[j] - min;
+            }
+        }
+        if (count == 0 || count > temp) {
+            count = temp;
+        }
+        min++;
+    }
 
     return count;
+}
+
+int calculateFuelExp(int* num, int size, int min, int max) {
+    int count = 0;
+
+    for (int i = min; i <= max; ++i) {
+        int temp = 0;
+        for (int j = 0; j < size; ++j) {
+            if (min > num[j]) {
+                temp += expensive(min - num[j]);
+            }
+            if (min < num[j]) {
+                temp += expensive(num[j] - min);
+            }
+        }
+        if (count == 0 || count > temp) {
+            count = temp;
+        }
+        min++;
+    }
+
+    return count;
+}
+
+int expensive(int fuel) {
+    int sum = 0;
+
+    for (int i = 1; i <= fuel; ++i) {
+        sum += i;
+    }
+
+    return sum;
 }

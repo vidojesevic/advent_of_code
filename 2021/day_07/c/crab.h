@@ -7,5 +7,7 @@ int* readFile(const char *filePath);
 int findMin(int* arr, int size);
 int findMax(int* arr, int size);
 int calculateFuel(int* num, int size, int min, int max);
+int calculateFuelExp(int* num, int size, int min, int max);
+int expensive(int fuel);
 
 #endif

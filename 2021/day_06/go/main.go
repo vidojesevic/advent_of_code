@@ -39,24 +39,29 @@ func makeIntOfStr(arr []string) []int64 {
     return arrInt
 }
 
-func fishes(initial []int64) int {
+func fishes(init []int64) int {
     for i := 0; i < 80; i++ {
-        for j := 0; j < len(initial); j++ {
-            initial[j] -= 1
-            if initial[j] == -1 {
-                initial[j] = 6
-                initial = append(initial, 9)
+        for j := 0; j < len(init); j++ {
+            init[j]--
+            if init[j] == -1 {
+                init[j] = 6
+                init = append(init, 9)
             }
         }
-        // fmt.Printf("Day %v: %v\n", i+1, initial)
     }
-    return len(initial)
+    return len(init)
+}
+
+func partTwo(arr []int64) int {
+    var count int
+    return count
 }
 
 func main() {
 
-    fileStr := readFile("../input.txt")
-    fmt.Printf("This is output of the file: %s", fileStr)
+    // fileStr := readFile("../input.txt")
+    fileStr := readFile("../test.txt")
+    // fmt.Printf("This is output of the file: %s", fileStr)
 
     fileArr := explode(",", fileStr)
     arrInt := makeIntOfStr(fileArr)
@@ -65,5 +70,8 @@ func main() {
     // fmt.Printf("Array: %v\n", arrInt)
 
     count := fishes(arrInt)
-    fmt.Printf("Result: %v\n", count)
+    fmt.Printf("Result of part one: %v\n", count)
+
+    countTwo := partTwo(arrInt)
+    fmt.Printf("Result of part two: %v\n", countTwo)
 }

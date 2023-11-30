@@ -97,6 +97,38 @@ func calculateFuel(arr []int64, min int64, max int64) int64 {
     return count
 }
 
+func calculateFuelExp(arr []int64, min int64, max int64) int64 {
+    var count int64
+    target := min + 2
+    for j := target; j <= max; j++ {
+        var temp int64 = 0
+        for i := 0; i < len(arr); i++ {
+            if target > arr[i] {
+                temp += expensive(target - arr[i])
+            } else if arr[i] > target {
+                temp += expensive(arr[i] - target)
+            }
+        }
+        if count == 0 || count > temp{
+            count = temp
+        }
+        target++
+    }
+
+    return count
+}
+
+func expensive(distance int64) int64 {
+    var sum int64 = 0
+    var j int64 = 1
+
+    for i := j ; i <= distance; i++ {
+        sum += i
+    }
+
+    return sum
+}
+
 func main() {
     fmt.Println("Advent of Code 2021, Day 07!")
 
@@ -112,4 +144,7 @@ func main() {
     // let's start
     result := calculateFuel(arr, min, max)
     fmt.Printf("Result part one: %v\n", result)
+
+    resultTwo := calculateFuelExp(arr, min, max)
+    fmt.Printf("Result part two: %v\n", resultTwo)
 }

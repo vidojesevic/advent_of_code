@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../modules/modules.php";
+require_once "../../../modules/modules.php";
 
 echo "Advent of Code 2023!\nDay 1: Trebuchet\n"; 
 

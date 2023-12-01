@@ -4,8 +4,7 @@ CC = gcc
 SRC = crab.c
 OUT = crab
 
-CFLAGS = -g -Wall 
-#-Wextra
+CFLAGS = -g -Wall -Wextra
 STD = c11
 
 all: $(OUT)

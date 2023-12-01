@@ -39,23 +39,33 @@ func makeIntOfStr(arr []string) []int64 {
     return arrInt
 }
 
-func fishes(init []int64) int {
+func fishes(init []int64) int64 {
+    var count int64 = int64(len(init))
     for i := 0; i < 80; i++ {
         for j := 0; j < len(init); j++ {
             init[j]--
             if init[j] == -1 {
                 init[j] = 6
                 init = append(init, 9)
+                count++
             }
         }
     }
-    return len(init)
-}
-
-func partTwo(arr []int64) int {
-    var count int
     return count
 }
+//
+// func partTwo(init []int64) int {
+//     for i := 0; i < 200; i++ {
+//         for j := 0; j < len(init); j++ {
+//             init[j]--
+//             if init[j] == -1 {
+//                 init[j] = 6
+//                 init = append(init, 9)
+//             }
+//         }
+//     }
+//     return len(init)
+// }
 
 func main() {
 
@@ -72,6 +82,6 @@ func main() {
     count := fishes(arrInt)
     fmt.Printf("Result of part one: %v\n", count)
 
-    countTwo := partTwo(arrInt)
-    fmt.Printf("Result of part two: %v\n", countTwo)
+    // countTwo := partTwo(arrInt)
+    // fmt.Printf("Result of part two: %v\n", countTwo)
 }

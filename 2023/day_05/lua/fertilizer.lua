@@ -73,21 +73,27 @@ print("advent of Code 2023\nDay 5: If You Give A Seed A Fertilizer")
 local function make_map_from_data(from, map_val)
     local result = {}
     for n, v in ipairs(from) do
-        print("seed num: " .. n)
-        for i = 1, #map_val, 3 do
-            local dest_range = map_val[i]
-            local source_range = map_val[i + 1]
-            local len = map_val[i + 2]
-            for j = 0, len - 1 do
-                if tonumber(v) == source_range + j then
-                    print("seed: " .. v .. ", soil: " .. dest_range + j)
-                    table.insert(result, n, dest_range + j)
-                end
-            end
-        end
         if result[n] == nil then
-            print("seed: " .. from[n] .. ", soil: " .. from[n])
+            print("Inserted default on: " .. n)
             table.insert(result, n, from[n])
+        end
+        for i = 1, #map_val, 3 do
+            if tonumber(v) > tonumber(map_val[i + 1]) and tonumber(v) < tonumber(map_val[i + 1]) + tonumber(map_val[i + 2]) then
+                -- local dest_range = map_val[i]
+                -- local source_range = map_val[i + 1]
+                -- local len = map_val[i + 2]
+                -- for j = 0, map_val[i + 2] - 1 do
+                --     if tonumber(v) == tonumber(map_val[i + 1]) + j then
+                --         -- print("seed: " .. v .. ", soil: " .. dest_range + j)
+                --         print("Found match: " .. map_val[i] + j)
+                --         result[n] = map_val[i] + j
+                --         -- table.insert(result, n, map_val[i] + j)
+                --         break
+                --     end
+                -- end
+                local index = tonumber(v) - map_val[i + 1]
+                result[n] = map_val[i] + index
+            end
         end
     end
 
@@ -97,18 +103,18 @@ end
 print(table.concat(seeds, ", ") .. " -> seeds")
 local soil = make_map_from_data(seeds, seed_to_soil_map)
 print(table.concat(soil, ", ") .. " -> soil")
--- local fertilizer = make_map_from_data(soil, soil_to_fertilizer_map)
--- print(table.concat(fertilizer, ", ") .. " -> fertilizer")
--- local water = make_map_from_data(fertilizer, fertilizer_to_water_map)
--- print(table.concat(water, ", ") .. " -> water")
--- local light = make_map_from_data(water, water_to_light_map)
--- print(table.concat(light, ", ") .. " -> light")
--- local temperature = make_map_from_data(light, light_to_temperature_map)
--- print(table.concat(temperature, ", ") .. " -> temperature")
--- local humidity = make_map_from_data(temperature, temperature_to_humidity_map)
--- print(table.concat(humidity, ", ") .. " -> humidity")
--- local location = make_map_from_data(humidity, humidity_to_location_map)
--- print(table.concat(location, ", ") .. " -> location")
+local fertilizer = make_map_from_data(soil, soil_to_fertilizer_map)
+print(table.concat(fertilizer, ", ") .. " -> fertilizer")
+local water = make_map_from_data(fertilizer, fertilizer_to_water_map)
+print(table.concat(water, ", ") .. " -> water")
+local light = make_map_from_data(water, water_to_light_map)
+print(table.concat(light, ", ") .. " -> light")
+local temperature = make_map_from_data(light, light_to_temperature_map)
+print(table.concat(temperature, ", ") .. " -> temperature")
+local humidity = make_map_from_data(temperature, temperature_to_humidity_map)
+print(table.concat(humidity, ", ") .. " -> humidity")
+local location = make_map_from_data(humidity, humidity_to_location_map)
+print(table.concat(location, ", ") .. " -> location")
 
 local function calculate_lowest(array)
     local low = array[1]
@@ -120,5 +126,5 @@ local function calculate_lowest(array)
     return low
 end
 
--- local result = calculate_lowest(location)
--- print("Result of part one: " .. result)
+local result = calculate_lowest(location)
+print("Result of part one: " .. result)

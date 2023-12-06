@@ -36,7 +36,7 @@ end
 local function extract_data_from_map(data)
     local map = {}
     local line = aoc.explode("\n", data)
-    for i, v in ipairs(line) do
+    for _, v in ipairs(line) do
         local temp = aoc.explode(" ", v)
         for _, val in ipairs(temp) do
             if val ~= nil then
@@ -74,23 +74,11 @@ local function make_map_from_data(from, map_val)
     local result = {}
     for n, v in ipairs(from) do
         if result[n] == nil then
-            print("Inserted default on: " .. n)
+            -- print("Inserted default on: " .. n)
             table.insert(result, n, from[n])
         end
         for i = 1, #map_val, 3 do
             if tonumber(v) > tonumber(map_val[i + 1]) and tonumber(v) < tonumber(map_val[i + 1]) + tonumber(map_val[i + 2]) then
-                -- local dest_range = map_val[i]
-                -- local source_range = map_val[i + 1]
-                -- local len = map_val[i + 2]
-                -- for j = 0, map_val[i + 2] - 1 do
-                --     if tonumber(v) == tonumber(map_val[i + 1]) + j then
-                --         -- print("seed: " .. v .. ", soil: " .. dest_range + j)
-                --         print("Found match: " .. map_val[i] + j)
-                --         result[n] = map_val[i] + j
-                --         -- table.insert(result, n, map_val[i] + j)
-                --         break
-                --     end
-                -- end
                 local index = tonumber(v) - map_val[i + 1]
                 result[n] = map_val[i] + index
             end
@@ -100,21 +88,21 @@ local function make_map_from_data(from, map_val)
     return result
 end
 
-print(table.concat(seeds, ", ") .. " -> seeds")
+-- print(table.concat(seeds, ", ") .. " -> seeds")
 local soil = make_map_from_data(seeds, seed_to_soil_map)
-print(table.concat(soil, ", ") .. " -> soil")
+-- print(table.concat(soil, ", ") .. " -> soil")
 local fertilizer = make_map_from_data(soil, soil_to_fertilizer_map)
-print(table.concat(fertilizer, ", ") .. " -> fertilizer")
+-- print(table.concat(fertilizer, ", ") .. " -> fertilizer")
 local water = make_map_from_data(fertilizer, fertilizer_to_water_map)
-print(table.concat(water, ", ") .. " -> water")
+-- print(table.concat(water, ", ") .. " -> water")
 local light = make_map_from_data(water, water_to_light_map)
-print(table.concat(light, ", ") .. " -> light")
+-- print(table.concat(light, ", ") .. " -> light")
 local temperature = make_map_from_data(light, light_to_temperature_map)
-print(table.concat(temperature, ", ") .. " -> temperature")
+-- print(table.concat(temperature, ", ") .. " -> temperature")
 local humidity = make_map_from_data(temperature, temperature_to_humidity_map)
-print(table.concat(humidity, ", ") .. " -> humidity")
+-- print(table.concat(humidity, ", ") .. " -> humidity")
 local location = make_map_from_data(humidity, humidity_to_location_map)
-print(table.concat(location, ", ") .. " -> location")
+-- print(table.concat(location, ", ") .. " -> location")
 
 local function calculate_lowest(array)
     local low = array[1]
@@ -126,5 +114,63 @@ local function calculate_lowest(array)
     return low
 end
 
-local result = calculate_lowest(location)
-print("Result of part one: " .. result)
+-- local result = calculate_lowest(location)
+-- print("Result of part one: " .. result)
+
+-- Part Two
+
+local function make_map_from_data2(from, map_val)
+    local res = {}
+    local nesto = ""
+    for i = 1, #from, 2 do
+        local start = tonumber(from[i])
+        local range = tonumber(from[i + 1])
+        print("start: " .. start .. ", range: " .. range)
+        for j = 0, range do
+            table.insert(res, start + j)
+            print("current: " .. start + j)
+            nesto = nesto .. start + j .. ", "
+            for n = 1, #map_val, 3 do
+                local finish = start + j + range - tonumber(map_val[n + 1])
+                -- if finish ~= nil then
+                --     print("Finish: " .. finish)
+                -- end
+                if finish >= 0 and start + j > tonumber(map_val[n + 1]) and start + j < tonumber(map_val[n + 1]) + tonumber(map_val[n + 2]) then
+                    local index = start + j - map_val[n + 1]
+                    res[#res] = map_val[n] + index
+                    print("Found num on index: " .. j + 1)
+                end
+            end
+        end
+    end
+    print(nesto .. " -> seeds")
+
+    return res
+end
+
+-- seeds = make_new_seeds(seeds)
+-- print("There is " .. #seeds .. " seeds now, OMG!")
+
+-- print(table.concat(seeds, ", ") .. " -> seeds")
+print(table.concat(seeds, ", ") .. " -> seeds")
+soil = make_map_from_data2(seeds, seed_to_soil_map)
+print(table.concat(soil, ", ") .. " -> soil")
+fertilizer = make_map_from_data(soil, soil_to_fertilizer_map)
+print(table.concat(fertilizer, ", ") .. " -> fertilizer")
+water = make_map_from_data(fertilizer, fertilizer_to_water_map)
+print(table.concat(water, ", ") .. " -> water")
+light = make_map_from_data(water, water_to_light_map)
+print(table.concat(light, ", ") .. " -> light")
+temperature = make_map_from_data(light, light_to_temperature_map)
+print(table.concat(temperature, ", ") .. " -> temperature")
+humidity = make_map_from_data(temperature, temperature_to_humidity_map)
+print(table.concat(humidity, ", ") .. " -> humidity")
+location = make_map_from_data(humidity, humidity_to_location_map)
+print(table.concat(location, ", ") .. " -> location")
+-- for i = 1, #location do
+--     print("Seed: " .. seeds[i] .. " soil: " .. soil[i] .. " fert: " .. fertilizer[i] .. " water: " .. water[i] .. " light: " .. light[i] .. " temp: " .. temperature[i] .. " location: " .. location[i])
+-- end
+
+-- local res = calculate_lowest({soil_low, fert_low, wate_low, light_low, temp_low, humidity_low, location_low})
+local res = calculate_lowest(location)
+print("Result of part two: " .. res)

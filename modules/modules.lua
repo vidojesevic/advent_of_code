@@ -59,5 +59,14 @@ function aoc.mergeTwoArrays(arr1, arr2)
     table.move(arr2, index2, #arr2, #arr + 1, arr)
     return arr
 end
+--
+-- function aoc.makeMatrix(arr)
+--     local lines = aoc.explode("\n", arr)
+--     local result = {}
+--     for i = 1, #lines do
+--         result[i] = aoc.explode("", lines)
+--     end
+--     return result
+-- end
 
 return aoc

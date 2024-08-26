@@ -1,0 +1,17 @@
+// package utils
+//
+// type Node struct {
+//     hand  Hand
+//     next  *List
+//     prev  *List
+// }
+//
+// type LinkedList struct {
+//     hand  Hand
+//     len   int
+//     head  *List
+//     tail  *List
+// }
+//
+// func (l *LinkedList) createList() {
+// }

@@ -188,9 +188,6 @@ func main() {
 
     // read from file
     input := utils.ReadFile("../input.txt")
-
-    // currentRank := 1
-
     linkedList := &LinkedList{}
 
     for _, v := range input {
